@@ -41,7 +41,6 @@
     "serialport": "*",
     "qr-image": "*",
     "usb": "*",
-    "node-bluetooth": "*"
   },
   "devDependencies": {
     "mocha": "*"
