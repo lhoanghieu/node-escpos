@@ -601,7 +601,6 @@ Printer.prototype.getPureBuffer = function(callback) {
  * @return {[type]}            [description]
  */
 Printer.prototype.close = function (callback, options) {
-  console.log(this.pureContent);
   var self = this;
   return this.flush(function () {
     self.adapter.close(callback, options);

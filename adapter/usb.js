@@ -145,6 +145,7 @@ USB.prototype.open = function (callback){
  */
 USB.prototype.write = function(data, callback){
   this.emit('data', data);
+  console.log(data);
   this.endpoint.transfer(data, callback);
   return this;
 };
