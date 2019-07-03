@@ -2,10 +2,11 @@
 /**
  * Adapters
  */
-exports.USB     = require('./adapter/usb');
-exports.Serial  = require('./adapter/serial');
-exports.Network = require('./adapter/network');
-exports.Console = require('./adapter/console');
+exports.USB       = require('./adapter/usb');
+exports.Serial    = require('./adapter/serial');
+exports.Network   = require('./adapter/network');
+exports.Console   = require('./adapter/console');
+exports.LinePrint = require('./adapter/linePrint');
 
 /**
  * Printer Supports
@@ -13,7 +14,7 @@ exports.Console = require('./adapter/console');
 exports.Image    = require('./image');
 exports.Server   = require('./server');
 exports.Printer  = require('./printer');
-exports.Screen  = require('./screen');
+exports.Screen   = require('./screen');
 exports.Adapter  = require('./adapter');
 exports.command  = require('./commands');
 exports.Printer2 = require('./promiseify');
