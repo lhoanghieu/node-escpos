@@ -45,8 +45,8 @@ LinePrint.prototype.open = function (callback) {
  */
 LinePrint.prototype.write = function (data, callback) {
     this.emit('data', data);
-    console.log('rawData: ', rawData);
-    writeFile(this.device, rawData, (err) => {
+    console.log('rawData: ', data);
+    writeFile(this.device, data, (err) => {
         if (err) {
             console.log(err);
         }
