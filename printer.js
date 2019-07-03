@@ -112,6 +112,7 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
+  console.log(iconv.encode(content + _.EOL, encoding || this.encoding));
   this.rawText += iconv.encode(content + _.EOL, encoding || this.encoding);
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
 };
@@ -264,20 +265,20 @@ Printer.prototype.style = function (type) {
  */
 Printer.prototype.size = function (width, height) {
   if (2 >= width && 2 >= height) {
-    this.rawText += _.TEXT_FORMAT.TXT_NORMAL;
+    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_NORMAL, encode || this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_NORMAL);
     if (2 == width && 2 == height) {
-      this.rawText += _.TEXT_FORMAT.TXT_4SQUARE;
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_4SQUARE, encode || this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_4SQUARE);
     } else if (1 == width && 2 == height) {
-      this.rawText += _.TEXT_FORMAT.TXT_2HEIGHT;
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2HEIGHT, encode || this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2HEIGHT);
     } else if (2 == width && 1 == height) {
-      this.rawText += _.TEXT_FORMAT.TXT_2WIDTH;
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2WIDTH, encode || this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2WIDTH);
     }
   } else {
-    this.rawText += _.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height);
+    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height), encoding || this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height));
   }
   return this;
