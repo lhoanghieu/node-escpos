@@ -39,8 +39,8 @@ LinePrint.prototype.open = function (callback){
  */
 LinePrint.prototype.write = function(data, callback){
   this.emit('data', data);
-  console.log('ble: ', String.raw`printf "${data}" >> ${this.device}`);
-  shelljs(String.raw`printf '${data}' >> ${this.device}`);
+  console.log('ble: ', String.raw`printf ${data} >> ${this.device}`);
+  shelljs(String.raw`printf ${data} >> ${this.device}`);
   return this;
 };
 
