@@ -1,5 +1,4 @@
 'use strict';
-const shelljs = require('shelljs.exec');
 const util = require('util');
 const EventEmitter = require('events');
 
@@ -45,7 +44,6 @@ LinePrint.prototype.open = function (callback) {
  */
 LinePrint.prototype.write = function (data, callback) {
     this.emit('data', data);
-    console.log('rawData: ', data);
     writeFile(this.device, data, (err) => {
         if (err) {
             console.log(err);
