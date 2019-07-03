@@ -12,7 +12,7 @@ const EventEmitter  = require('events');
 function LinePrint(path){
   EventEmitter.call(this);
   this.device = path;
-  if (!this.path)
+  if (!this.device)
     throw new Error('Can not find printer');
   return this;
 };
