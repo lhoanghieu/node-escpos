@@ -265,20 +265,20 @@ Printer.prototype.style = function (type) {
  */
 Printer.prototype.size = function (width, height) {
   if (2 >= width && 2 >= height) {
-    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_NORMAL, encode || this.encoding);
+    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_NORMAL, this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_NORMAL);
     if (2 == width && 2 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_4SQUARE, encode || this.encoding);
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_4SQUARE, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_4SQUARE);
     } else if (1 == width && 2 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2HEIGHT, encode || this.encoding);
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2HEIGHT, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2HEIGHT);
     } else if (2 == width && 1 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2WIDTH, encode || this.encoding);
+      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2WIDTH, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2WIDTH);
     }
   } else {
-    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height), encoding || this.encoding);
+    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height), this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height));
   }
   return this;
