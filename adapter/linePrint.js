@@ -28,6 +28,7 @@ util.inherits(LinePrint, EventEmitter);
  * @return {[type]}            [description]
  */
 LinePrint.prototype.open = function (callback){
+  callback && callback();
   return this;
 };
 
