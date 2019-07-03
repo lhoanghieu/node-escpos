@@ -12,7 +12,7 @@ const Promiseify = require('./promiseify');
 
 /**
  * [function ESC/POS Printer]
- * @param  {[Adapter]} adapter [eg: usb, network, or serialport]
+ * @param  {[Adapter]} adapter [eg: usb, network, or serialport, lp]
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 function Printer(adapter, options) {
@@ -24,8 +24,6 @@ function Printer(adapter, options) {
   this.adapter = adapter;
   this.buffer = new MutableBuffer();
   this.encoding = options && options.encoding || 'GB18030';
-  this.pureContent = '';
-  this.pureBuffer = '';
   this._model = null;
 };
 
@@ -93,7 +91,6 @@ Printer.prototype.marginRight = function (size) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.print = function (content) {
-  this.pureBuffer += content;
   this.buffer.write(content);
   return this;
 };
@@ -113,7 +110,6 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
-  this.pureContent += content + _.EOL;
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
 };
 
@@ -584,14 +580,6 @@ Printer.prototype.cut = function (part, feed) {
     part ? 'PAPER_PART_CUT' : 'PAPER_FULL_CUT'
   ]);
   return this;
-};
-
-Printer.prototype.getPureContent = function(callback) {
-  return this.pureContent;
-};
-
-Printer.prototype.getPureBuffer = function(callback) {
-  return this.pureBuffer;
 };
 
 /**
