@@ -41,7 +41,7 @@ LinePrint.prototype.write = function (data, callback) {
     this.emit('data', data);
     const rawData = String.raw`${data}`;
     console.log('rawData: ', rawData);
-    shelljs(`printf '${rawData}' >> ${this.device}`);
+    shelljs(`printf ${rawData} >> ${this.device}`);
     return this;
 };
 
