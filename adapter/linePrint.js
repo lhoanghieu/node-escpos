@@ -1,5 +1,5 @@
 'use strict';
-const shelljs           = require('shelljs');
+const shelljs           = require('shelljs.exec');
 const util          = require('util');
 const EventEmitter  = require('events');
 
