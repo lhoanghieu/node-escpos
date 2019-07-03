@@ -112,6 +112,7 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
+  console.log('content', content);
   console.log(iconv.encode(content + _.EOL, encoding || this.encoding));
   this.rawText += iconv.encode(content + _.EOL, encoding || this.encoding);
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
@@ -588,6 +589,8 @@ Printer.prototype.close = function (callback, options) {
  */
 Printer.prototype.flush = function (callback) {
   var buf = this.buffer.flush();
+  console.log(typeof buf);
+  console.log(buf);
   this.rawData = buf;
   this.adapter.write(buf, callback);
   return this;
