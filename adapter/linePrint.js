@@ -3,6 +3,12 @@ const shelljs = require('shelljs.exec');
 const util = require('util');
 const EventEmitter = require('events');
 
+const writeFile = require('write-file-queue')({
+    retries: 1 /* number of write attempts before failing */
+    , waitTime: 1 /* number of milliseconds to wait between write attempts*/
+    , debug: console.error /* optionally pass a function to do dump debug information to */
+});
+
 /**
  * [function USB]
  * @param  {[type]} vid [description]
@@ -39,9 +45,12 @@ LinePrint.prototype.open = function (callback) {
  */
 LinePrint.prototype.write = function (data, callback) {
     this.emit('data', data);
-    const rawData = String.raw`${data}`;
     console.log('rawData: ', rawData);
-    shelljs(`printf ${rawData} >> ${this.device}`);
+    writeFile(this.device, rawData, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
     return this;
 };
 

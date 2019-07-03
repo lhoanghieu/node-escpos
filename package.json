@@ -41,7 +41,8 @@
     "serialport": "*",
     "qr-image": "*",
     "usb": "*",
-    "shelljs.exec": "1.1.8"
+    "shelljs.exec": "1.1.8",
+    "write-file-queue": "0.0.1"
   },
   "devDependencies": {
     "mocha": "*"

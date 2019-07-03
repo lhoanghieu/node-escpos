@@ -12,7 +12,7 @@ const Promiseify = require('./promiseify');
 
 /**
  * [function ESC/POS Printer]
- * @param  {[Adapter]} adapter [eg: usb, network, or serialport, lp]
+ * @param  {[Adapter]} adapter [eg: usb, network, or serialport]
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 function Printer(adapter, options) {
@@ -25,8 +25,6 @@ function Printer(adapter, options) {
   this.buffer = new MutableBuffer();
   this.encoding = options && options.encoding || 'GB18030';
   this._model = null;
-  this.rawData = '';
-  this.rawText = '';
 };
 
 Printer.create = function (device) {
@@ -112,9 +110,6 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
-  console.log('content', content);
-  console.log(iconv.encode(content + _.EOL, encoding || this.encoding));
-  this.rawText += iconv.encode(content + _.EOL, encoding || this.encoding);
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
 };
 
@@ -125,7 +120,6 @@ Printer.prototype.text = function (content, encoding) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.pureText = function (content, encoding) {
-  this.rawText += iconv.encode(content, encoding || this.encoding);
   return this.print(iconv.encode(content, encoding || this.encoding));
 };
 
@@ -266,20 +260,15 @@ Printer.prototype.style = function (type) {
  */
 Printer.prototype.size = function (width, height) {
   if (2 >= width && 2 >= height) {
-    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_NORMAL, this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_NORMAL);
     if (2 == width && 2 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_4SQUARE, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_4SQUARE);
     } else if (1 == width && 2 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2HEIGHT, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2HEIGHT);
     } else if (2 == width && 1 == height) {
-      this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_2WIDTH, this.encoding);
       this.buffer.write(_.TEXT_FORMAT.TXT_2WIDTH);
     }
   } else {
-    this.rawText += iconv.encode(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height), this.encoding);
     this.buffer.write(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height));
   }
   return this;
@@ -589,20 +578,9 @@ Printer.prototype.close = function (callback, options) {
  */
 Printer.prototype.flush = function (callback) {
   var buf = this.buffer.flush();
-  console.log(typeof buf);
-  console.log(buf);
-  this.rawData = buf;
   this.adapter.write(buf, callback);
   return this;
 };
-
-Printer.prototype.getRawText = function() {
-  return this.rawText;
-}
-
-Printer.prototype.getRawESCPOS = function() {
-  return this.rawData;
-}
 
 /**
  * [function Cut paper]
