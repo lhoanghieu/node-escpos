@@ -25,7 +25,8 @@ function Printer(adapter, options) {
   this.buffer = new MutableBuffer();
   this.encoding = options && options.encoding || 'GB18030';
   this._model = null;
-  this.rawData = null;
+  this.rawData = '';
+  this.rawText = '';
 };
 
 Printer.create = function (device) {
@@ -111,7 +112,7 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
-  this.rawData += iconv.encode(content + _.EOL, encoding || this.encoding);
+  this.rawText += iconv.encode(content + _.EOL, encoding || this.encoding);
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
 };
 
@@ -122,7 +123,7 @@ Printer.prototype.text = function (content, encoding) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.pureText = function (content, encoding) {
-  this.rawData += iconv.encode(content, encoding || this.encoding);
+  this.rawText += iconv.encode(content, encoding || this.encoding);
   return this.print(iconv.encode(content, encoding || this.encoding));
 };
 
@@ -585,6 +586,10 @@ Printer.prototype.flush = function (callback) {
   this.adapter.write(buf, callback);
   return this;
 };
+
+Printer.prototype.getRawText = function() {
+  return this.rawText;
+}
 
 Printer.prototype.getRawESCPOS = function() {
   return this.rawData;
