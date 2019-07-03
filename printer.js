@@ -24,6 +24,8 @@ function Printer(adapter, options) {
   this.adapter = adapter;
   this.buffer = new MutableBuffer();
   this.encoding = options && options.encoding || 'GB18030';
+  this.pureContent = '';
+  this.pureBuffer = '';
   this._model = null;
 };
 
@@ -91,7 +93,7 @@ Printer.prototype.marginRight = function (size) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.print = function (content) {
-  console.log(content);
+  this.pureBuffer += content;
   this.buffer.write(content);
   return this;
 };
@@ -111,6 +113,7 @@ Printer.prototype.println = function (content) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.text = function (content, encoding) {
+  this.pureContent += content + _.EOL;
   return this.print(iconv.encode(content + _.EOL, encoding || this.encoding));
 };
 
@@ -583,6 +586,14 @@ Printer.prototype.cut = function (part, feed) {
   return this;
 };
 
+Printer.prototype.getPureContent = function(callback) {
+  return this.pureContent;
+};
+
+Printer.prototype.getPureBuffer = function(callback) {
+  return this.pureBuffer;
+};
+
 /**
  * [close description]
  * @param  {Function} callback [description]
@@ -590,6 +601,7 @@ Printer.prototype.cut = function (part, feed) {
  * @return {[type]}            [description]
  */
 Printer.prototype.close = function (callback, options) {
+  console.log(this.pureContent);
   var self = this;
   return this.flush(function () {
     self.adapter.close(callback, options);
