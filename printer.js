@@ -264,15 +264,20 @@ Printer.prototype.style = function (type) {
  */
 Printer.prototype.size = function (width, height) {
   if (2 >= width && 2 >= height) {
+    this.rawText += _.TEXT_FORMAT.TXT_NORMAL;
     this.buffer.write(_.TEXT_FORMAT.TXT_NORMAL);
     if (2 == width && 2 == height) {
+      this.rawText += _.TEXT_FORMAT.TXT_4SQUARE;
       this.buffer.write(_.TEXT_FORMAT.TXT_4SQUARE);
     } else if (1 == width && 2 == height) {
+      this.rawText += _.TEXT_FORMAT.TXT_2HEIGHT;
       this.buffer.write(_.TEXT_FORMAT.TXT_2HEIGHT);
     } else if (2 == width && 1 == height) {
+      this.rawText += _.TEXT_FORMAT.TXT_2WIDTH;
       this.buffer.write(_.TEXT_FORMAT.TXT_2WIDTH);
     }
   } else {
+    this.rawText += _.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height);
     this.buffer.write(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height));
   }
   return this;
