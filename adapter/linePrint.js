@@ -40,7 +40,7 @@ LinePrint.prototype.open = function (callback){
 LinePrint.prototype.write = function(data, callback){
   this.emit('data', data);
   console.log('ble: ', data);
-  shelljs(String.raw`${data}`);
+  shelljs(String.raw`printf "${data}" >> ${this.device}`);
   return this;
 };
 
