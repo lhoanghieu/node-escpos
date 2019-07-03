@@ -562,6 +562,19 @@ Printer.prototype.beep = function (n, t) {
 };
 
 /**
+ * [close description]
+ * @param  {Function} callback [description]
+ * @param  {[type]}   options  [description]
+ * @return {[type]}            [description]
+ */
+Printer.prototype.close = function (callback, options) {
+  var self = this;
+  return this.flush(function () {
+    self.adapter.close(callback, options);
+  });
+};
+
+/**
  * Send data to hardware and flush buffer
  * @param  {Function} callback
  * @return {[Printer]} printer  [the escpos printer instance]
@@ -588,19 +601,6 @@ Printer.prototype.cut = function (part, feed) {
     part ? 'PAPER_PART_CUT' : 'PAPER_FULL_CUT'
   ]);
   return this;
-};
-
-/**
- * [close description]
- * @param  {Function} callback [description]
- * @param  {[type]}   options  [description]
- * @return {[type]}            [description]
- */
-Printer.prototype.close = function (callback, options) {
-  var self = this;
-  return this.flush(function () {
-    self.adapter.close(callback, options);
-  });
 };
 
 /**
