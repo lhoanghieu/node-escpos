@@ -1,5 +1,5 @@
 'use strict';
-const shelljs           = require('shelljs.exec');
+const shelljs       = require('shelljs.exec');
 const util          = require('util');
 const EventEmitter  = require('events');
 
@@ -40,7 +40,7 @@ LinePrint.prototype.open = function (callback){
 LinePrint.prototype.write = function(data, callback){
   this.emit('data', data);
   console.log('ble: ', data);
-  shelljs.exec(String.raw`${data}`);
+  shelljs(String.raw`${data}`);
   return this;
 };
 
