@@ -583,6 +583,14 @@ Printer.prototype.flush = function (callback) {
 };
 
 /**
+ * Print out the buffer as string
+ */
+Printer.prototype.printOut = function (callback) {
+  var buf = this.buffer.flush();
+  return String.raw`${buf}`;
+};
+
+/**
  * [function Cut paper]
  * @param  {[type]} part [description]
  * @return {[Printer]} printer  [the escpos printer instance]
