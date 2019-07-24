@@ -586,7 +586,7 @@ Printer.prototype.flush = function (callback) {
  * Print out the buffer as string
  */
 Printer.prototype.printOut = function (callback) {
-  var buf = this.buffer.flush();
+  var buf = this.buffer.flush(); 
   return String.raw`${buf}`;
 };
 
