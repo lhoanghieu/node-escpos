@@ -90,7 +90,10 @@ Printer.prototype.marginRight = function (size) {
  * @param  {[String]}  content  [mandatory]
  * @return {[Printer]} printer  [the escpos printer instance]
  */
-Printer.prototype.print = function (content) {
+Printer.prototype.print = function (content, encoding = null) {
+  if (encoding) {
+    content = iconv.encode(content, encoding || this.encoding);
+  }
   this.buffer.write(content);
   return this;
 };
