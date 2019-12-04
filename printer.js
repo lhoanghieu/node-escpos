@@ -599,7 +599,7 @@ Printer.prototype.printOut = function (callback) {
  * @return {[Printer]} printer  [the escpos printer instance]
  */
 Printer.prototype.cut = function (part, feed) {
-  this.feed(feed || 3);
+  // this.feed(feed || 3);
   this.buffer.write(_.PAPER[
     part ? 'PAPER_PART_CUT' : 'PAPER_FULL_CUT'
   ]);
